@@ -46,11 +46,23 @@ class AMapView(context: Context) : TextureMapView(context) {
 
         map.setOnMyLocationChangeListener { location ->
             val event = Arguments.createMap()
+            var lcLocation = location as lc
             event.putDouble("latitude", location.latitude)
             event.putDouble("longitude", location.longitude)
             event.putDouble("accuracy", location.accuracy.toDouble())
             event.putDouble("altitude", location.altitude)
             event.putDouble("speed", location.speed.toDouble())
+            event.putString("province",lcLocation.province)
+            event.putString("city", lcLocation.city)
+            event.putString("district", lcLocation.district)
+            event.putString("cityCode", lcLocation.cityCode)
+            event.putString("adCode", lcLocation.adCode)
+            event.putString("address", lcLocation.address)
+            event.putString("country", lcLocation.country)
+            event.putString("poiName", lcLocation.poiName)
+            event.putString("street", lcLocation.street)
+            event.putString("streetNum", lcLocation.streetNum)
+            event.putString("aoiName", lcLocation.aoiName)
             event.putInt("timestamp", location.time.toInt())
             emit(id, "onLocation", event)
         }
