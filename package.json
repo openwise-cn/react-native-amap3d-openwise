@@ -1,0 +1,56 @@
+{
+  "name": "react-native-amap3d-openwise",
+  "version": "0.0.1",
+  "description": "项目需要,在react-native-amap3d组件上扩展而来. react-native 高德地图组件，支持 Android + iOS",
+  "author": "lzy3366 <lzy3366@qq.com>",
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "amap",
+    "maps",
+    "mapview"
+  ],
+  "main": "lib/js",
+  "files": [
+    "lib/js",
+    "lib/android/src",
+    "lib/android/build.gradle",
+    "lib/ios"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lzy3366/react-native-amap3d-openwise"
+  },
+  "scripts": {
+    "test": "eslint . && flow",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "run-android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "log-android": "node node_modules/react-native/local-cli/cli.js log-android",
+    "reload-android": "adb reverse tcp:8081 tcp:8081 && adb shell input text rr",
+    "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.47"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.1.2",
+    "babel-preset-react-native": "^4.0.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "flow-bin": "^0.64.0",
+    "react": "16.2.0",
+    "react-native": "0.52.2",
+    "react-navigation": "^1.0.0-beta.23"
+  },
+  "presets": [
+    "react-native"
+  ],
+  "rnpm": {
+    "android": {
+      "sourceDir": "lib/android"
+    }
+  }
+}

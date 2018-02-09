@@ -1,0 +1,61 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:1:1-14:12
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:1:1-14:12
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:1:1-14:12
+	package
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:2:5-39
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:4:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:5:5-81
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:5:22-78
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:7:5-76
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:7:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:8:5-76
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:8:22-73
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:9:5-75
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:9:22-72
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:10:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:11:5-79
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:11:22-76
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:12:5-68
+	android:name
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml:12:22-65
+uses-sdk
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+		ADDED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Work\188tech\Development\meet-car\4 Source Code\app\MeetCarApp\node_modules\react-native-amap3d\lib\android\src\main\AndroidManifest.xml
