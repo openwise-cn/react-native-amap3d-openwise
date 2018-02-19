@@ -7,6 +7,9 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.TextureMapView
 import com.amap.api.maps.model.*
+import com.amap.api.services.core.AMapException
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.geocoder.*
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
@@ -14,7 +17,7 @@ import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
 
-class AMapView(context: Context) : TextureMapView(context) {
+class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeocodeSearchListener {
     private val eventEmitter: RCTEventEmitter = (context as ThemedReactContext).getJSModule(RCTEventEmitter::class.java)
     private val markers = HashMap<String, AMapMarker>()
     private val lines = HashMap<String, AMapPolyline>()
@@ -23,9 +26,11 @@ class AMapView(context: Context) : TextureMapView(context) {
         locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
         locationStyle
     }
+    private val geocoderSearch = GeocodeSearch(context)
 
     init {
         super.onCreate(null)
+        geocoderSearch.setOnGeocodeSearchListener(this)
 
         map.setOnMapClickListener { latLng ->
             for (marker in markers.values) {
@@ -253,6 +258,72 @@ class AMapView(context: Context) : TextureMapView(context) {
             val drawable = context.resources.getIdentifier(
                     style.getString("image"), "drawable", context.packageName)
             locationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(drawable))
+        }
+    }
+
+    fun getLatlon(args: ReadableArray?) {
+        if (args == null) {
+            return
+        } else {
+            val name = args.getString(0)
+            val city = args.getString(1)
+            val query = GeocodeQuery(name, city)// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，
+            geocoderSearch.getFromLocationNameAsyn(query)// 设置同步地理编码请求
+        }
+    }
+
+    fun getAddress(args: ReadableArray?) {
+        if (args == null) {
+            return
+        } else {
+            val latLonPoint = LatLonPoint(args!!.getDouble(0), args.getDouble(1))
+            val query = RegeocodeQuery(
+                    latLonPoint,
+                    200f,
+                    GeocodeSearch.AMAP)// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+            geocoderSearch.getFromLocationAsyn(query)// 设置异步逆地理编码请求
+        }
+    }
+
+    override fun onGeocodeSearched(result: GeocodeResult?, rCode: Int) {
+        if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getGeocodeAddressList() != null
+                    && result.getGeocodeAddressList().size > 0) {
+                val address = result.getGeocodeAddressList().get(0)
+                val event = Arguments.createMap()
+                event.putDouble("latitude", address.latLonPoint.latitude)
+                event.putDouble("longitude", address.latLonPoint.longitude)
+                emit(id, "onGeocodeSearched", event)
+            } else {
+                val event = Arguments.createMap()
+                event.putDouble("latitude", 0.0)
+                event.putDouble("longitude", 0.0)
+                emit(id, "onGeocodeSearched", event)
+            }
+        } else {
+            val event = Arguments.createMap()
+            event.putDouble("latitude", 0.0)
+            event.putDouble("longitude", 0.0)
+            emit(id, "onGeocodeSearched", event)
+        }
+    }
+
+    override fun onRegeocodeSearched(result: RegeocodeResult?, rCode: Int) {
+        if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.regeocodeAddress != null) {
+                val address = result.regeocodeAddress
+                val event = Arguments.createMap()
+                event.putString("address", address.aois.get(0).aoiName)
+                emit(id, "onRegeocodeSearched", event)
+            } else {
+                val event = Arguments.createMap()
+                event.putString("address", "坐标位置")
+                emit(id, "onRegeocodeSearched", event)
+            }
+        } else {
+            val event = Arguments.createMap()
+            event.putString("address", "坐标位置")
+            emit(id, "onRegeocodeSearched", event)
         }
     }
 }

@@ -2,3 +2,10 @@ build
 /node_modules
 /yarn.lock
 /package-lock.json
+.gradle
+.idea
+/lib/android/android.iml
+/lib/android/gradle/wrapper
+/lib/android/gradlew
+/lib/android/gradlew.bat
+/lib/android/local.properties

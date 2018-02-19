@@ -15,6 +15,8 @@ import com.facebook.react.uimanager.annotations.ReactProp
 internal class AMapViewManager : ViewGroupManager<AMapView>() {
     companion object {
         val ANIMATE_TO = 1
+        val GET_ADDRESS = 2
+        val GET_LATLON = 3
     }
 
     override fun getName(): String {
@@ -30,13 +32,25 @@ internal class AMapViewManager : ViewGroupManager<AMapView>() {
         view.onDestroy()
     }
 
+    /**
+     * 定义外部命令列表
+     */
     override fun getCommandsMap(): Map<String, Int> {
-        return mapOf("animateTo" to ANIMATE_TO)
+        return mapOf(
+            "animateTo" to ANIMATE_TO,
+            "getAddress" to GET_ADDRESS,
+            "getLatlon" to GET_LATLON
+        )
     }
 
+    /**
+     *  当接收到外部命令时执行的方法
+     */
     override fun receiveCommand(overlay: AMapView, commandId: Int, args: ReadableArray?) {
         when (commandId) {
             ANIMATE_TO -> overlay.animateTo(args)
+            GET_ADDRESS -> overlay.getAddress(args)
+            GET_LATLON -> overlay.getLatlon(args)
         }
     }
 
@@ -51,15 +65,17 @@ internal class AMapViewManager : ViewGroupManager<AMapView>() {
     }
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
-        return MapBuilder.of(
-                "onPress", MapBuilder.of("registrationName", "onPress"),
-                "onLongPress", MapBuilder.of("registrationName", "onLongPress"),
-                "onAnimateCancel", MapBuilder.of("registrationName", "onAnimateCancel"),
-                "onAnimateFinish", MapBuilder.of("registrationName", "onAnimateFinish"),
-                "onStatusChange", MapBuilder.of("registrationName", "onStatusChange"),
-                "onStatusChangeComplete", MapBuilder.of("registrationName", "onStatusChangeComplete"),
-                "onLocation", MapBuilder.of("registrationName", "onLocation")
-        )
+        return MapBuilder.builder<String, Map<String, String>>()
+                .put("onPress", MapBuilder.of<String, String>("registrationName", "onPress"))
+                .put("onLongPress", MapBuilder.of<String, String>("registrationName", "onLongPress"))
+                .put("onAnimateCancel", MapBuilder.of<String, String>("registrationName", "onAnimateCancel"))
+                .put("onAnimateFinish", MapBuilder.of<String, String>("registrationName", "onAnimateFinish"))
+                .put("onStatusChange", MapBuilder.of<String, String>("registrationName", "onStatusChange"))
+                .put("onStatusChangeComplete", MapBuilder.of<String, String>("registrationName", "onStatusChangeComplete"))
+                .put("onLocation", MapBuilder.of<String, String>("registrationName", "onLocation"))
+                .put("onGeocodeSearched", MapBuilder.of<String, String>("registrationName", "onGeocodeSearched"))
+                .put("onRegeocodeSearched", MapBuilder.of<String, String>("registrationName", "onRegeocodeSearched"))
+                .build()
     }
 
     @ReactProp(name = "locationEnabled")
