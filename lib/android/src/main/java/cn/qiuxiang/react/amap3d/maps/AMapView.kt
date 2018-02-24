@@ -314,15 +314,18 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
                 val address = result.regeocodeAddress
                 val event = Arguments.createMap()
                 event.putString("aoiName", address.aois.get(0).aoiName)
+                event.putString("poiName", address.pois.get(0).toString())
                 emit(id, "onRegeocodeSearched", event)
             } else {
                 val event = Arguments.createMap()
-                event.putString("aoiName", "坐标位置")
+                event.putString("aoiName", "未知坐标位置")
+                event.putString("poiName", "未知坐标位置")
                 emit(id, "onRegeocodeSearched", event)
             }
         } else {
             val event = Arguments.createMap()
-            event.putString("aoiName", "坐标位置")
+            event.putString("aoiName", "未知坐标位置")
+            event.putString("poiName", "未知坐标位置")
             emit(id, "onRegeocodeSearched", event)
         }
     }
