@@ -48,7 +48,13 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) : React
         if (rCode == AMapException.CODE_AMAP_SUCCESS && tipList != null) {// 正确返回
             val listJson = JSONArray()
             for (i in tipList.indices) {
-                listJson.put(tipList.get(i).getName())
+                val tip = tipList.get(i)
+                val jsonTip = JSONObject()
+                jsonTip.put("name", tip.name)
+                jsonTip.put("address", tip.address)
+                jsonTip.put("latitude", tip.point.latitude)
+                jsonTip.put("longitude", tip.point.longitude)
+                listJson.put(jsonTip)
             }
             val data = Arguments.createMap()
             data.putString("tipList", listJson.toString())
