@@ -16,6 +16,10 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
+import android.support.v4.media.MediaDescriptionCompatApi21.Builder.build
+import com.amap.api.maps.model.LatLngBounds
+
+
 
 class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeocodeSearchListener {
     private val eventEmitter: RCTEventEmitter = (context as ThemedReactContext).getJSModule(RCTEventEmitter::class.java)
@@ -211,6 +215,21 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
         val cameraUpdate = CameraUpdateFactory.newCameraPosition(
                 CameraPosition(coordinate, zoomLevel, tilt, rotation))
         map.animateCamera(cameraUpdate, duration.toLong(), animateCallback)
+    }
+
+    fun animateBound(args: ReadableArray?) {
+        // args传入为坐标json数组
+        val points = args?.getArray(0)
+        if(points != null) {
+            val boundsBuilder = LatLngBounds.Builder()//存放所有点的经纬度
+
+            for (i in 0 until points.size()) {
+                points.getMap(i).getDouble("latitude")
+                boundsBuilder.include(LatLng(points.getMap(i).getDouble("latitude"), points.getMap(i).getDouble("longitude"))) //把所有点都include进去（LatLng类型）
+            }
+
+            map.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 15))//第二个参数为四周留空宽度
+        }
     }
 
     fun setRegion(region: ReadableMap) {

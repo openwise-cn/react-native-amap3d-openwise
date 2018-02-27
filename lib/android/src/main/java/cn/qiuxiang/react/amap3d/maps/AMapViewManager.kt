@@ -17,6 +17,7 @@ internal class AMapViewManager : ViewGroupManager<AMapView>() {
         val ANIMATE_TO = 1
         val GET_ADDRESS = 2
         val GET_LATLON = 3
+        val ANIMATE_BOUND = 4
     }
 
     override fun getName(): String {
@@ -39,7 +40,8 @@ internal class AMapViewManager : ViewGroupManager<AMapView>() {
         return mapOf(
             "animateTo" to ANIMATE_TO,
             "getAddress" to GET_ADDRESS,
-            "getLatlon" to GET_LATLON
+            "getLatlon" to GET_LATLON,
+            "animateBound" to ANIMATE_BOUND
         )
     }
 
@@ -51,6 +53,7 @@ internal class AMapViewManager : ViewGroupManager<AMapView>() {
             ANIMATE_TO -> overlay.animateTo(args)
             GET_ADDRESS -> overlay.getAddress(args)
             GET_LATLON -> overlay.getLatlon(args)
+            ANIMATE_BOUND -> overlay.animateBound(args)
         }
     }
 
