@@ -228,7 +228,7 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
                 boundsBuilder.include(LatLng(points.getMap(i).getDouble("latitude"), points.getMap(i).getDouble("longitude"))) //把所有点都include进去（LatLng类型）
             }
 
-            map.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 15))//第二个参数为四周留空宽度
+            map.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 150))//第二个参数为四周留空宽度
         }
     }
 
