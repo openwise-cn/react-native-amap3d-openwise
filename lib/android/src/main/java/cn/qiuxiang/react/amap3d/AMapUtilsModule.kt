@@ -9,16 +9,21 @@ import com.amap.api.maps.AMapUtils
 import com.amap.api.maps.CoordinateConverter
 import com.amap.api.maps.model.LatLng
 import com.amap.api.services.core.AMapException
+import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.help.Inputtips
 import com.amap.api.services.help.InputtipsQuery
 import com.amap.api.services.help.Tip
+import com.amap.api.services.route.*
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import org.json.JSONArray
 import org.json.JSONObject
 
 @Suppress("unused")
-class AMapUtilsModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext), Inputtips.InputtipsListener, AMapLocationListener {
+class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
+        ReactContextBaseJavaModule(reactContext),
+        Inputtips.InputtipsListener, AMapLocationListener,
+        RouteSearch.OnRouteSearchListener {
     override fun getName(): String {
         return "AMapUtils"
     }
@@ -117,6 +122,45 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) : React
         ret.put("latitude", destLatLng.latitude)
         ret.put("longitude", destLatLng.longitude)
         promise.resolve(ret.toString())
+    }
+
+    /**
+     * 开始搜索路径规划方案
+     */
+    @ReactMethod
+    fun searchRouteResult(startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double) {
+        val startLatLng = LatLonPoint(startLatitude, startLongitude)
+        val endLatLng = LatLonPoint(endLatitude, endLongitude)
+        val fromAndTo = RouteSearch.FromAndTo(startLatLng, endLatLng)
+        val routeSearch = RouteSearch(reactContext)
+        routeSearch.setRouteSearchListener(this)
+        val query = RouteSearch.DriveRouteQuery(fromAndTo, 0, null, null, "")// 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
+        routeSearch.calculateDriveRouteAsyn(query)// 异步路径规划驾车模式查询
+    }
+
+    override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
+        if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.paths != null && result.paths.size > 0) {
+                val path = result.paths.get(0)
+                val data = Arguments.createMap()
+                data.putInt("distance", path.distance.toInt())
+                data.putInt("duration", path.duration.toInt())
+                data.putInt("cost", result.taxiCost.toInt())
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onDriveRouteSearched", data)
+            }
+        } else {}
+    }
+
+    override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRideRouteSearched(p0: RideRouteResult?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onWalkRouteSearched(p0: WalkRouteResult?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
 
