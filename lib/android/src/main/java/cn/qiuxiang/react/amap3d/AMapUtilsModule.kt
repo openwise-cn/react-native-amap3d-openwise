@@ -166,33 +166,23 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun getLatlon(args: ReadableArray?) {
-        if (args == null) {
-            return
-        } else {
-            val geocoderSearch = GeocodeSearch(reactContext)
-            geocoderSearch.setOnGeocodeSearchListener(this)
-            val name = args.getString(0)
-            val city = args.getString(1)
-            val query = GeocodeQuery(name, city)// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，
-            geocoderSearch.getFromLocationNameAsyn(query)// 设置同步地理编码请求
-        }
+    fun getLatlon(name: String, city: String) {
+        val geocoderSearch = GeocodeSearch(reactContext)
+        geocoderSearch.setOnGeocodeSearchListener(this)
+        val query = GeocodeQuery(name, city)// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，
+        geocoderSearch.getFromLocationNameAsyn(query)// 设置同步地理编码请求
     }
 
     @ReactMethod
-    fun getAddress(args: ReadableArray?) {
-        if (args == null) {
-            return
-        } else {
-            val geocoderSearch = GeocodeSearch(reactContext)
-            geocoderSearch.setOnGeocodeSearchListener(this)
-            val latLonPoint = LatLonPoint(args!!.getDouble(0), args.getDouble(1))
-            val query = RegeocodeQuery(
-                    latLonPoint,
-                    200f,
-                    GeocodeSearch.AMAP)// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-            geocoderSearch.getFromLocationAsyn(query)// 设置异步逆地理编码请求
-        }
+    fun getAddress(latitude: Double, longitude: Double) {
+        val geocoderSearch = GeocodeSearch(reactContext)
+        geocoderSearch.setOnGeocodeSearchListener(this)
+        val latLonPoint = LatLonPoint(latitude, longitude)
+        val query = RegeocodeQuery(
+                latLonPoint,
+                200f,
+                GeocodeSearch.AMAP)// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+        geocoderSearch.getFromLocationAsyn(query)// 设置异步逆地理编码请求
     }
 
     override fun onGeocodeSearched(result: GeocodeResult?, rCode: Int) {
