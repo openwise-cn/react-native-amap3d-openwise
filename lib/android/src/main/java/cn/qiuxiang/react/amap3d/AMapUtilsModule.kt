@@ -10,6 +10,7 @@ import com.amap.api.maps.CoordinateConverter
 import com.amap.api.maps.model.LatLng
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.geocoder.*
 import com.amap.api.services.help.Inputtips
 import com.amap.api.services.help.InputtipsQuery
 import com.amap.api.services.help.Tip
@@ -23,7 +24,8 @@ import org.json.JSONObject
 class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
         ReactContextBaseJavaModule(reactContext),
         Inputtips.InputtipsListener, AMapLocationListener,
-        RouteSearch.OnRouteSearchListener {
+        RouteSearch.OnRouteSearchListener,
+        GeocodeSearch.OnGeocodeSearchListener {
     override fun getName(): String {
         return "AMapUtils"
     }
@@ -161,6 +163,82 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
 
     override fun onWalkRouteSearched(p0: WalkRouteResult?, p1: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun getLatlon(args: ReadableArray?) {
+        if (args == null) {
+            return
+        } else {
+            val geocoderSearch = GeocodeSearch(reactContext)
+            geocoderSearch.setOnGeocodeSearchListener(this)
+            val name = args.getString(0)
+            val city = args.getString(1)
+            val query = GeocodeQuery(name, city)// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，
+            geocoderSearch.getFromLocationNameAsyn(query)// 设置同步地理编码请求
+        }
+    }
+
+    fun getAddress(args: ReadableArray?) {
+        if (args == null) {
+            return
+        } else {
+            val geocoderSearch = GeocodeSearch(reactContext)
+            geocoderSearch.setOnGeocodeSearchListener(this)
+            val latLonPoint = LatLonPoint(args!!.getDouble(0), args.getDouble(1))
+            val query = RegeocodeQuery(
+                    latLonPoint,
+                    200f,
+                    GeocodeSearch.AMAP)// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+            geocoderSearch.getFromLocationAsyn(query)// 设置异步逆地理编码请求
+        }
+    }
+
+    override fun onGeocodeSearched(result: GeocodeResult?, rCode: Int) {
+        if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getGeocodeAddressList() != null
+                    && result.getGeocodeAddressList().size > 0) {
+                val address = result.getGeocodeAddressList().get(0)
+                val event = Arguments.createMap()
+                event.putDouble("latitude", address.latLonPoint.latitude)
+                event.putDouble("longitude", address.latLonPoint.longitude)
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onGeocodeSearched", event)
+            } else {
+                val event = Arguments.createMap()
+                event.putDouble("latitude", 0.0)
+                event.putDouble("longitude", 0.0)
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onGeocodeSearched", event)
+            }
+        } else {
+            val event = Arguments.createMap()
+            event.putDouble("latitude", 0.0)
+            event.putDouble("longitude", 0.0)
+            reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onGeocodeSearched", event)
+        }
+    }
+
+    override fun onRegeocodeSearched(result: RegeocodeResult?, rCode: Int) {
+        if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.regeocodeAddress != null) {
+                val address = result.regeocodeAddress
+                val event = Arguments.createMap()
+                event.putString("aoiName", address.aois.get(0).aoiName)
+                event.putString("poiName", address.pois.get(0).toString())
+                event.putString("city", address.city)
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onRegeocodeSearched", event)
+            } else {
+                val event = Arguments.createMap()
+                event.putString("aoiName", "未知坐标位置")
+                event.putString("poiName", "未知坐标位置")
+                event.putString("city", "未知城市")
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onRegeocodeSearched", event)
+            }
+        } else {
+            val event = Arguments.createMap()
+            event.putString("aoiName", "未知坐标位置")
+            event.putString("poiName", "未知坐标位置")
+            event.putString("city", "未知城市")
+            reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onRegeocodeSearched", event)
+        }
     }
 }
 
