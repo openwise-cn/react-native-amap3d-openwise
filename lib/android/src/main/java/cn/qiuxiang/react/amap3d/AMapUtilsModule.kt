@@ -165,6 +165,7 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    @ReactMethod
     fun getLatlon(args: ReadableArray?) {
         if (args == null) {
             return
@@ -178,6 +179,7 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
         }
     }
 
+    @ReactMethod
     fun getAddress(args: ReadableArray?) {
         if (args == null) {
             return
