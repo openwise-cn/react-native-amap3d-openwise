@@ -14,12 +14,14 @@ abstract class AMapNavigationManager<T : AMapNavigation> : SimpleViewManager<T>(
     companion object {
         val START = 1
         val CALCULATE_ROUTE = 2
+        val STOP = 3
     }
 
     override fun getCommandsMap(): Map<String, Int> {
         return mapOf(
                 "start" to START,
-                "calculateRoute" to CALCULATE_ROUTE
+                "calculateRoute" to CALCULATE_ROUTE,
+                "stop" to STOP
         )
     }
 
@@ -27,6 +29,7 @@ abstract class AMapNavigationManager<T : AMapNavigation> : SimpleViewManager<T>(
         when (commandId) {
             START -> view.start()
             CALCULATE_ROUTE -> view.calculateRoute(args)
+            STOP -> view.stop()
         }
     }
 
