@@ -40,13 +40,15 @@ internal class AMapMarkerManager : ViewGroupManager<AMapMarker>() {
         val UPDATE = 1
         val ACTIVE = 2
         val LOCK_TO_SCREEN = 3
+        val MOVE_TO = 4
     }
 
     override fun getCommandsMap(): Map<String, Int> {
         return mapOf(
                 "update" to UPDATE,
                 "active" to ACTIVE,
-                "lockToScreen" to LOCK_TO_SCREEN
+                "lockToScreen" to LOCK_TO_SCREEN,
+                "moveTo" to MOVE_TO
         )
     }
 
@@ -55,6 +57,7 @@ internal class AMapMarkerManager : ViewGroupManager<AMapMarker>() {
             UPDATE -> marker.updateIcon()
             ACTIVE -> marker.active = true
             LOCK_TO_SCREEN -> marker.lockToScreen(args)
+            MOVE_TO -> marker.moveTo(args)
         }
     }
 

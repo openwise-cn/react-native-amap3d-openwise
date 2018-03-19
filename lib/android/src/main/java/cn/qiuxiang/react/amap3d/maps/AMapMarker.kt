@@ -164,4 +164,13 @@ class AMapMarker(context: Context) : ReactViewGroup(context), AMapOverlay {
             marker?.setPositionByPixels(x, y)
         }
     }
+
+    fun moveTo(args: ReadableArray?) {
+        if (args != null) {
+            val latitude = args.getDouble(0)
+            val longitude = args.getDouble(1)
+            val point = LatLng(latitude, longitude)
+            marker?.position = point
+        }
+    }
 }
