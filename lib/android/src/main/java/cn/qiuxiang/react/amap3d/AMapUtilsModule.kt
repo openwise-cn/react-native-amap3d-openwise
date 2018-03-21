@@ -56,6 +56,9 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
             val listJson = JSONArray()
             for (i in tipList.indices) {
                 val tip = tipList.get(i)
+                if (tip.point == null) {
+                    continue
+                }
                 val jsonTip = JSONObject()
                 jsonTip.put("name", tip.name)
                 jsonTip.put("address", tip.address)
