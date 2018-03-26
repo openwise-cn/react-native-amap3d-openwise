@@ -1,6 +1,7 @@
 package cn.qiuxiang.react.amap3d.maps
 
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import com.amap.api.col.n3.lc
 import com.amap.api.maps.AMap
@@ -28,6 +29,8 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
     private val locationStyle by lazy {
         val locationStyle = MyLocationStyle()
         locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
+        locationStyle.strokeColor(Color.argb(0, 0, 0, 0))
+        locationStyle.radiusFillColor(Color.argb(0, 0, 0, 0))
         locationStyle
     }
     private val geocoderSearch = GeocodeSearch(context)
