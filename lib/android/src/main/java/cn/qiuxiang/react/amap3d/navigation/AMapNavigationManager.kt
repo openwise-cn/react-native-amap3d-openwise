@@ -36,7 +36,11 @@ abstract class AMapNavigationManager<T : AMapNavigation> : SimpleViewManager<T>(
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
         return MapBuilder.of(
                 "onCalculateRouteSuccess", MapBuilder.of("registrationName", "onCalculateRouteSuccess"),
-                "onCalculateRouteFailure", MapBuilder.of("registrationName", "onCalculateRouteFailure")
+                "onCalculateRouteFailure", MapBuilder.of("registrationName", "onCalculateRouteFailure"),
+                "onStartNavi", MapBuilder.of("registrationName", "onStartNavi"),
+                "onGetNavigationText", MapBuilder.of("registrationName", "onGetNavigationText"),
+                "onReCalculateRouteForYaw", MapBuilder.of("registrationName", "onReCalculateRouteForYaw"),
+                "onArriveDestination", MapBuilder.of("registrationName", "onArriveDestination")
         )
     }
 }

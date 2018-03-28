@@ -68,6 +68,7 @@ abstract class AMapNavigation(context: ThemedReactContext) :
     }
 
     override fun onArriveDestination() {
+        sendEvent("onArriveDestination")
     }
 
     override fun onPlayRing(p0: Int) {
@@ -85,7 +86,11 @@ abstract class AMapNavigation(context: ThemedReactContext) :
     override fun showCross(p0: AMapNaviCross?) {
     }
 
-    override fun onGetNavigationText(p0: Int, p1: String?) {
+    override fun onGetNavigationText(type: Int, text: String?) {
+        val event = Arguments.createMap()
+        event.putInt("type", type)
+        event.putString("message", text)
+        sendEvent("onGetNavigationText", event)
     }
 
     override fun onGetNavigationText(p0: String?) {
@@ -116,9 +121,14 @@ abstract class AMapNavigation(context: ThemedReactContext) :
     }
 
     override fun onReCalculateRouteForYaw() {
+        val event = Arguments.createMap()
+        sendEvent("onReCalculateRouteForYaw", event)
     }
 
-    override fun onStartNavi(p0: Int) {
+    override fun onStartNavi(type: Int) {
+        val event = Arguments.createMap()
+        event.putInt("type", type)
+        sendEvent("onStartNavi", event)
     }
 
     override fun notifyParallelRoad(p0: Int) {
