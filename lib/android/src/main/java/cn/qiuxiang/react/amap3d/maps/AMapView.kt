@@ -18,6 +18,7 @@ import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import android.support.v4.media.MediaDescriptionCompatApi21.Builder.build
+import com.amap.api.maps.AMapUtils
 import com.amap.api.maps.model.LatLngBounds
 
 
@@ -322,9 +323,28 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
         if (rCode == AMapException.CODE_AMAP_SUCCESS) {
             if (result != null && result.regeocodeAddress != null) {
                 val address = result.regeocodeAddress
+                // 选取最近的位置返回
+                val queryLatlng = LatLng(result.regeocodeQuery.point.latitude, result.regeocodeQuery.point.longitude)
+                // 使用第一个地址作为比较对象初始化
+                var minDistance = AMapUtils.calculateLineDistance(
+                        queryLatlng,
+                        LatLng(address.pois.get(0).latLonPoint.latitude, address.pois.get(0).latLonPoint.longitude)
+                )
+                var minPoi = address.pois.get(0).toString()
+                for (poi in address.pois) {
+                    // 遍历地址计算距离, 如果距离更小则替换返回地址
+                    val tempDistance = AMapUtils.calculateLineDistance(
+                            queryLatlng,
+                            LatLng(poi.latLonPoint.latitude, poi.latLonPoint.longitude)
+                    )
+                    if (tempDistance < minDistance) {
+                        minDistance = tempDistance
+                        minPoi = poi.toString()
+                    }
+                }
                 val event = Arguments.createMap()
                 event.putString("aoiName", address.aois.get(0).aoiName)
-                event.putString("poiName", address.pois.get(0).toString())
+                event.putString("poiName", minPoi)
                 event.putString("city", address.city)
                 emit(id, "onRegeocodeSearched", event)
             } else {
