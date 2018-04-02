@@ -82,8 +82,8 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
         locationClient.setLocationListener(this)
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         locationOption.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-        //设置定位间隔,单位毫秒,默认为2000ms
-        locationOption.interval = 2000
+        //设置定位间隔,单位毫秒,默认为5000ms
+        locationOption.interval = 5000
         //设置定位参数
         locationClient.setLocationOption(locationOption)
         // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
