@@ -30,6 +30,8 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
     private val locationStyle by lazy {
         val locationStyle = MyLocationStyle()
         locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
+        val drawable = context.resources.getIdentifier("mylocation", "drawable", context.packageName)
+        locationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(drawable))
         locationStyle.strokeColor(Color.argb(0, 0, 0, 0))
         locationStyle.radiusFillColor(Color.argb(0, 0, 0, 0))
         locationStyle
