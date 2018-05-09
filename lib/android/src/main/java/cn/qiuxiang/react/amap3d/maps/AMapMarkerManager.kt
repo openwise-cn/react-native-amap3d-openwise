@@ -41,6 +41,7 @@ internal class AMapMarkerManager : ViewGroupManager<AMapMarker>() {
         val ACTIVE = 2
         val LOCK_TO_SCREEN = 3
         val MOVE_TO = 4
+        val RANDOM_TRACE = 5
     }
 
     override fun getCommandsMap(): Map<String, Int> {
@@ -48,7 +49,8 @@ internal class AMapMarkerManager : ViewGroupManager<AMapMarker>() {
                 "update" to UPDATE,
                 "active" to ACTIVE,
                 "lockToScreen" to LOCK_TO_SCREEN,
-                "moveTo" to MOVE_TO
+                "moveTo" to MOVE_TO,
+                "randomTrace" to RANDOM_TRACE
         )
     }
 
@@ -58,6 +60,7 @@ internal class AMapMarkerManager : ViewGroupManager<AMapMarker>() {
             ACTIVE -> marker.active = true
             LOCK_TO_SCREEN -> marker.lockToScreen(args)
             MOVE_TO -> marker.moveTo(args)
+            RANDOM_TRACE -> marker.randomTrace()
         }
     }
 
