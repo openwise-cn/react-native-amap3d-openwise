@@ -256,7 +256,9 @@ class AMapUtilsModule(private val reactContext: ReactApplicationContext) :
                     }
                 }
                 val event = Arguments.createMap()
-                event.putString("aoiName", address.aois.get(0).aoiName)
+                if (!address.aois.isEmpty()) {
+                    event.putString("aoiName", address.aois.get(0).aoiName)
+                }
                 event.putString("poiName", minPoi)
                 event.putString("city", address.city)
                 reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java).emit("onRegeocodeSearched", event)

@@ -1,6 +1,6 @@
 {
   "name": "react-native-amap3d-openwise",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "项目需要,在react-native-amap3d组件上扩展而来. react-native 高德地图组件，支持 Android + iOS",
   "author": "lzy3366 <lzy3366@qq.com>",
   "license": "MIT",

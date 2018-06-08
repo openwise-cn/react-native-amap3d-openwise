@@ -345,7 +345,9 @@ class AMapView(context: Context) : TextureMapView(context), GeocodeSearch.OnGeoc
                     }
                 }
                 val event = Arguments.createMap()
-                event.putString("aoiName", address.aois.get(0).aoiName)
+                if (!address.aois.isEmpty()) {
+                    event.putString("aoiName", address.aois.get(0).aoiName)
+                }
                 event.putString("poiName", minPoi)
                 event.putString("city", address.city)
                 emit(id, "onRegeocodeSearched", event)
